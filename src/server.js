@@ -41,8 +41,8 @@ app.put('/pokemons/:id', (req, res) => {
 });
 
 //Deletar pokemon
-app.delete('/pokemons/:id', (req, res) => {
-    res.send(dataBase.deletarPokemon(req.params.id))
+app.delete('/pokemons/:id', async (req, res) => {
+    res.send(await dataBase.deletarPokemon(req.params.id))
 })
 
 //batalha Pokemon

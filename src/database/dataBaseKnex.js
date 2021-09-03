@@ -41,9 +41,10 @@ async function salvarPokemons(pokemon) {
 
 //função mostrar o pokemon
 async function mostrarPokemon(id) {
-    const querySelectPokemon = `SELECT * FROM pokedex WHERE ID = ${id}`
+    // sem Knex const querySelectPokemon = `SELECT * FROM pokedex WHERE ID = ${id}`
 
-    const result = await dataBaseConnection.raw(querySelectPokemon)
+    //com Knex
+    const result = await dataBaseConnection('pokedex').where({ id })
 
     return result[0]
 }
@@ -51,31 +52,57 @@ async function mostrarPokemon(id) {
 //mostrar todos os pokemons
 
 async function mostrarPokemons() {
-    const querySelectPokemons = `SELECT * FROM pokedex`
+    //Sem knex
+    //const querySelectPokemons = `SELECT * FROM pokedex`
+    //const result = await dataBaseConnection.raw(querySelectPokemons)
+    //return result[0]
 
-    const result = await dataBaseConnection.raw(querySelectPokemons)
+    //com knex
+    const result = await dataBaseConnection('pokedex')
 
-    return result[0]
+    return result
+
 }
 
 //atualizar pokemon
-function atualizarPokemon(id, pokemon) {
-    pokemons[id] = pokemon
-    return pokemon
+async function atualizarPokemon(id, pokemon) {
+    
+        const updatePokemon = {
+        nome: pokemon.nome,
+        tipo: pokemon.tipo,
+        fraqueza: pokemon.fraqueza,
+        resistencia: pokemon.resistencia,
+        hp: pokemon.hp
+
+    }
+
+
+    const result = await dataBaseConnection('pokedex').where({id}).update(updatePokemon)
+
+    if(result){
+        return{
+            nome: pokemon.nome,
+            tipo: pokemon.tipo,
+            fraqueza: pokemon.fraqueza,
+            resistencia: pokemon.resistencia,
+            hp: pokemon.hp,
+            id
+        }
+    }else{
+        
+        return{
+            erro: "Deu erro na aplicação"
+        }
+    }
 }
 
 
 //Deletar pokemon
-function deletarPokemon(id) {
-    sequence._id = sequence._id -1
-    const pokemonDeletado = pokemons[id]
-    pokemons.splice(id, 1)
-    pokemons.forEach(pokemon => {
-        if(pokemon.id > id) {
-            pokemon.id = pokemon.id -1
-        }
-    })
-    return pokemonDeletado
+async function deletarPokemon(id) {
+    const result = await dataBaseConnection('pokedex').where({ id }).del()
+
+    return result[0]
+        
 }
 //batalha pokemon
 function batalhaPokemon(id1, id2) {
