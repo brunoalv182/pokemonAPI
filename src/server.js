@@ -1,23 +1,23 @@
 const express = require('express');
 const app = express();
-const dataBase = require('./database');
+const dataBase = require('./database/dataBaseKnex');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //mostrar todos os pokemons
-app.get('/pokemons', (req, res) => {
-    res.send(dataBase.mostrarPokemons())
+app.get('/pokemons', async (req, res) => {
+    res.send(await dataBase.mostrarPokemons())
 });
 
 //mostrar um pokemon
-app.get('/pokemons/:id', (req, res) => {
-    res.send(dataBase.mostrarPokemon(req.params.id))
+app.get('/pokemons/:id', async (req, res) => {
+    res.send(await dataBase.mostrarPokemon(req.params.id))
 });
 
 //salvar pokemon
-app.post('/pokemons', (req, res) => {
-    const pokemon = dataBase.salvarPokemons({
+app.post('/pokemons', async (req, res) => {
+    const pokemon = await dataBase.salvarPokemons({
         nome: req.body.nome,
         tipo: req.body.tipo,
         fraqueza: req.body.fraqueza,
