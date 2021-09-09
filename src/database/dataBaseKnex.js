@@ -8,7 +8,7 @@ const pokemons = []
 async function salvarPokemons(pokemon) {
     //const queryInsertPokemon = `INSERT INTO pokedex (nome, tipo, fraqueza, resistencia, hp) VALUES ('${pokemon.nome}', '${pokemon.tipo}',
     // '${pokemon.fraqueza}', '${pokemon.resistencia}', '${pokemon.hp}')`
-    //const result = await dataBaseConnection.raw(queryInsertPokemon)
+    //const result = await dataBaseConnection.raw(queryInsertPokemon)s
 
     const insertPokemon = {
         nome: pokemon.nome,
