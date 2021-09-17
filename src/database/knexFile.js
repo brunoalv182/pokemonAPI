@@ -5,7 +5,7 @@ module.exports = {
         connection: {
         host : 'localhost',
         user : 'root',
-        password : 'juliam01',
+        password : 'suasenha',
         database : 'pokemons'
         },
 
